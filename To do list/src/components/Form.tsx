@@ -3,21 +3,27 @@ import { CiCirclePlus } from "react-icons/ci";
 
 interface FormProps {
   onAddItem: () => void;
+  addTodo: () => void;
 }
 
-export function Form({ onAddItem }: FormProps) {
+export function Form({ onAddItem, addTodo }: FormProps) {
+
   const [text, setText] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const onlyLetters = e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, "").trim();
+    let onlyLetters = e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, "").trim();
     setText(onlyLetters);
     console.log(onlyLetters);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!text) return;
+    addTodo(text)
+    setText("");
     onAddItem();
   };
+  
 
   return (
     <form className="flex justify-center items-center max-w-3xl mx-auto gap-3.5 -mt-8" onSubmit={handleSubmit}>
