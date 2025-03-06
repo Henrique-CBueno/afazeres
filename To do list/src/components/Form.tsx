@@ -1,17 +1,26 @@
 import { useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
 
-export function Form() {
+interface FormProps {
+  onAddItem: () => void;
+}
+
+export function Form({ onAddItem }: FormProps) {
   const [text, setText] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const onlyLetters = e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, "").trim();
     setText(onlyLetters);
-    console.log(onlyLetters)
+    console.log(onlyLetters);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onAddItem();
   };
 
   return (
-    <form className="flex justify-center items-center gap-3.5 -mt-8">
+    <form className="flex justify-center items-center max-w-3xl mx-auto gap-3.5 -mt-8" onSubmit={handleSubmit}>
       <input
         placeholder="Adicione uma nova tarefa"
         type="text"
